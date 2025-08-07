@@ -1,0 +1,53 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go build outputs
+/build/
+/bin/
+/dist/
+/*.log
+
+# Dependency directories (Go modules, vendor)
+vendor/
+go.sum
+go.mod # (optional: ignore if you don’t want it tracked)
+
+# IDE/editor junk
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs and temp
+*.log
+*.tmp
+
+# Coverage
+coverage.*
+*.coverprofile
+*.cov
+
+# Tests
+testdata/
+test.json
+
+# Local config overrides
+.env
+.env.*
+config.local.*
+*.local.*
+
+# Database
+data/
