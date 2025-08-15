@@ -1,8 +1,7 @@
 package types
 
-type CustomFieldMap struct {
+type customFieldMap struct {
 	JobId string
-	GroupId string
 	Priority string
 }
 
@@ -12,5 +11,5 @@ type DispatcherConfig struct {
 	MaxWorkers int
 	MaxDispatch int
 	CustomFields bool
-	FieldMap CustomFieldMap 
+	FieldMap customFieldMap 
 }

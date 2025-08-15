@@ -99,7 +99,6 @@ func DispatcherInitPrompt() types.DispatcherConfig {
 	if index == 1 {
 		config.CustomFields = true
 		config.FieldMap.JobId = promptString("Custom Field - Job ID")
-		config.FieldMap.GroupId = promptString("Custom Field - Group ID")
 		config.FieldMap.Priority = promptString("Custom Field - Priority")
 	}
 

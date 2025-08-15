@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"justQit/cmd/dispatcher"
+	"justQit/cmd/dispatcher_cmd"
 )
 
 var rootCmd = &cobra.Command{
@@ -15,5 +15,5 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.AddCommand(dispatcher.Cmd)
+	rootCmd.AddCommand(dispatcher_cmd.Cmd)
 }
