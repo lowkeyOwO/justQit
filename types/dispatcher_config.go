@@ -12,4 +12,5 @@ type DispatcherConfig struct {
 	MaxDispatch int
 	CustomFields bool
 	FieldMap customFieldMap 
+	LogAfterXRequests int
 }

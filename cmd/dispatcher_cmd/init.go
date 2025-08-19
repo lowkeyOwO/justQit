@@ -2,9 +2,9 @@ package dispatcher_cmd
 
 import (
 	"github.com/spf13/cobra"
-	"justQit/conn"
 	"justQit/types"
 	"justQit/utils"
+	"justQit/dispatcher"
 )
 
 var Cmd = &cobra.Command{
@@ -26,7 +26,7 @@ var initCmd = &cobra.Command{
 		} else {
 			config = utils.DispatcherReadJSON(json)
 		}
-		conn.Initialize(port, config, dispatcherType)
+		dispatcher.Initialize(port, config, dispatcherType)
 	},
 }
 

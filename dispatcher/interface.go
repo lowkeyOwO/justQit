@@ -11,3 +11,4 @@ type Dispatcher interface {
 	JobASAP(http.ResponseWriter, *http.Request)
 	Ack(http.ResponseWriter, *http.Request)
 }
+

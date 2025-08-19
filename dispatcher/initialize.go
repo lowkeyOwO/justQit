@@ -1,8 +1,7 @@
-package conn
+package dispatcher
 
 import (
 	"fmt"
-	"justQit/dispatcher"
 	"justQit/types"
 	"net/http"
 	"strconv"
@@ -11,7 +10,7 @@ import (
 
 func Initialize(port int16, config types.DispatcherConfig, dispatcherType string) {
 
-	dispatchHandler := dispatcher.NewDispatcher(dispatcherType)
+	dispatchHandler := NewDispatcher(dispatcherType)
 	dispatchHandler.Initialize(config)
 
 	// External Methods 
