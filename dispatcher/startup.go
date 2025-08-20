@@ -5,12 +5,14 @@ import (
 	"justQit/types"
 	"net/http"
 	"strconv"
+	"justQit/database"
 )
 
 
-func Initialize(port int16, config types.DispatcherConfig, dispatcherType string) {
+func StartUp(port int16, config types.DispatcherConfig, dispatcherType string) {
 
 	dispatchHandler := NewDispatcher(dispatcherType)
+	database.InitializeLogger()
 	dispatchHandler.Initialize(config)
 
 	// External Methods 

@@ -3,6 +3,7 @@ package inmemory
 import (
 	"fmt"
 	"io"
+	"justQit/database"
 	"justQit/types"
 	"justQit/utils"
 	"net/http"
@@ -11,7 +12,7 @@ import (
 type InMemoryDispatcher struct {
 	config    types.DispatcherConfig
 	jobqueues []chan string
-	jobmap    map[string]string
+	jobmap    *utils.SafeMap[string, string]
 }
 
 func (inmemory *InMemoryDispatcher) Initialize(config types.DispatcherConfig) {
@@ -23,9 +24,7 @@ func (inmemory *InMemoryDispatcher) Initialize(config types.DispatcherConfig) {
 		inmemory.jobqueues[i] = make(chan string, queueSize)
 	}
 
-	inmemory.jobmap = make(map[string]string)
-
-	loggerQueue = make(chan string, config.LogAfterXRequests)
+	inmemory.jobmap = utils.NewSafeMap[string, string]()
 }
 
 func (inmemory *InMemoryDispatcher) Enqueue(w http.ResponseWriter, r *http.Request) {
@@ -41,14 +40,15 @@ func (inmemory *InMemoryDispatcher) Enqueue(w http.ResponseWriter, r *http.Reque
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	} else {
-		inmemory.jobmap[job_id] = payload
 		if len(inmemory.jobqueues[priority]) == cap(inmemory.jobqueues[priority]) {
 			w.WriteHeader(http.StatusTooManyRequests)
 			w.Write([]byte("Too many requests, please try later!"))
 		} else {
+			inmemory.jobmap.Set(job_id, payload)
 			inmemory.jobqueues[priority] <- job_id
 			w.WriteHeader(http.StatusAccepted)
-			go requestLogger(job_id, priority, payload);
+			logParcel := utils.CreateLogParcel(job_id, priority, payload)
+			database.LoggerQueue <- logParcel
 			w.Write([]byte("Job written with ID:\t" + job_id))
 		}
 	}
