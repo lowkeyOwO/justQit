@@ -25,6 +25,7 @@ func (inmemory *InMemoryDispatcher) JobASAP(w http.ResponseWriter, r *http.Reque
 	// If we have a job - move from jobmap to dispatchmap, update details
 	jobLog, _ := inmemory.jobMap.Get(response.JobID)
 	jobLog.DispatchTime = time.Now()
+	jobLog.Status = "Dispatched"
 
 	fmt.Fprintf(w, "dispatched job: %s, with payload: %s", response.JobID, jobLog.Payload)
 	

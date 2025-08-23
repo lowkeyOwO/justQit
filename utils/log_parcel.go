@@ -11,5 +11,6 @@ func CreateLogParcel(job_id string, priority int, payload string) *types.DBSchem
 		Priority:    priority,
 		Payload:     payload,
 		ArrivalTime: time.Now(),
+		Status: "Enqueued",
 	}
 }

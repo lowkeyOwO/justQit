@@ -24,7 +24,7 @@ var initCmd = &cobra.Command{
 		if json == "" {
 			config = utils.DispatcherInitPrompt()
 		} else {
-			config = utils.DispatcherReadJSON(json)
+			config = utils.ReadJSON[types.DispatcherConfig](json)
 		}
 		dispatcher.StartUp(port, config, dispatcherType)
 	},
