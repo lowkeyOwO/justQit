@@ -27,10 +27,10 @@ const schema string = `
 const query string = `
 	INSERT INTO jobs (
 		job_id, priority, payload, arrival_time, dispatch_time, 
-		ack_time, ack_worker_id, status, log
+		ack_time, worker_id, status, log
 	) VALUES (
 		:job_id, :priority, :payload, :arrival_time, :dispatch_time,
-		:ack_time, :ack_worker_id, :status, :log
+		:ack_time, :worker_id, :status, :log
 	)
 	`
 

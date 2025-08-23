@@ -2,23 +2,24 @@ package dispatcher
 
 import (
 	"fmt"
+	"justQit/database"
 	"justQit/types"
 	"net/http"
 	"strconv"
-	"justQit/database"
 )
 
-
 func StartUp(port int16, config types.DispatcherConfig, dispatcherType string) {
+	if config.LogToDatabase {
+		database.InitializeLogger(config.LogAfterXRequests)
+	}
 
 	dispatchHandler := NewDispatcher(dispatcherType)
-	database.InitializeLogger()
 	dispatchHandler.Initialize(config)
 
-	// External Methods 
-	http.HandleFunc("/dispatcher/enqueue", dispatchHandler.Enqueue) 
+	// External Methods
+	http.HandleFunc("/dispatcher/enqueue", dispatchHandler.Enqueue)
 
-	// Internal Methods 
+	// Internal Methods
 	http.HandleFunc("/dispatcher/ack", dispatchHandler.Ack)
 	http.HandleFunc("/dispatcher/jobasap", dispatchHandler.JobASAP)
 

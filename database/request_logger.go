@@ -13,11 +13,12 @@ import (
 var (
 	reqCount    int = 0
 	logFile         = "database/tmp.jsonl"
-	ReqLimit    int = 2
+	reqLimit    int = 2
 	LoggerQueue chan *types.DBSchema
 )
 
-func InitializeLogger() {
+func InitializeLogger(logAfterXreqs int) {
+	reqLimit = logAfterXreqs
 	LoggerQueue = make(chan *types.DBSchema, constants.LOG_BUFFER_SIZE)
 	go func() {
 		for req := range LoggerQueue {
@@ -38,14 +39,14 @@ func InitializeLogger() {
 			}
 			reqCount++
 			// Increment counter, see if it's reached capacity
-			if reqCount == ReqLimit {
+			if reqCount == reqLimit {
 				// Extract from file, write to DB
 				f, err := os.ReadFile(logFile)
 				if err != nil {
 					log.Fatal(err)
 				}
 				reqs := strings.Split(string(f), "\n")
-				dbEntries := make([]types.DBSchema, 0, ReqLimit) // len=0, cap=reqLimit
+				dbEntries := make([]types.DBSchema, 0, reqLimit) // len=0, cap=reqLimit
 				for _, req := range reqs {
 					var entry types.DBSchema
 					if err := json.Unmarshal([]byte(req), &entry); err != nil {
@@ -56,7 +57,7 @@ func InitializeLogger() {
 				ok := LogToDatabase(dbEntries)
 				if ok == 0 {
 					fmt.Println("Error logging to database")
-					// TODO Create a temporary file & store
+					// TODO Create a DLQ file & store
 				}
 				os.Truncate(logFile, 0)
 				reqCount = 0

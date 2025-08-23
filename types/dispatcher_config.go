@@ -11,6 +11,7 @@ type DispatcherConfig struct {
 	MaxWorkers int
 	MaxDispatch int
 	CustomFields bool
-	FieldMap customFieldMap 
+	FieldMap customFieldMap
+	LogToDatabase bool 
 	LogAfterXRequests int
 }

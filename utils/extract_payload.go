@@ -9,7 +9,7 @@ import (
 	"justQit/types"
 )
 
-func ExtractPayload(reqBody []byte, config types.DispatcherConfig) (string, int, string, error) {
+func ExtractPayload(reqBody []byte, config *types.DispatcherConfig) (string, int, string, error) {
 	var payload map[string]any
 	err := json.Unmarshal(reqBody, &payload)
 	if err != nil {

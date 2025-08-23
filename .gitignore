@@ -50,4 +50,5 @@ config.local.*
 *.local.*
 
 # Database
-data/
+*.db
+tmp.jsonl
